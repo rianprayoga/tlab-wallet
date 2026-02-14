@@ -9,4 +9,5 @@ type Repo interface {
 	GetUserById(userId string) (*model.User, error)
 
 	CreateWallet(userId string) error
+	GetWallet(userId string) (*model.Wallet, error)
 }

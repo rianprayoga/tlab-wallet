@@ -32,6 +32,11 @@ func (h *HttpHandler) Routes() http.Handler {
 		r.Use(config.Authenticator(h.Jwt))
 
 		r.Get("/api/users/profile", h.GetProfile)
+
+		r.Route("/api/wallets", func(cr chi.Router) {
+			cr.Get("/balance", h.GetWallet)
+			cr.Post("/topup", nil)
+		})
 	})
 
 	return mux

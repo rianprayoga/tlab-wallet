@@ -14,12 +14,12 @@ DB name tlab_wallet
 
 ## Run
 
-in root foler aka inside tlab-wallet foler run:
+in root folder aka inside tlab-wallet foler run:
 `go run ./cmd/`
 
 ## Doc
 
-All endpoint but requiers Bearer token but this one:
+All endpoint requires Bearer token but these two:
 
 ```
 POST /api/auth/register

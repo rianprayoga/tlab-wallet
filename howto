@@ -1,0 +1,5 @@
+export POSTGRESQL_URL='postgres://postgres:postgres@localhost:5432/tlab_wallet?sslmode=disable'
+
+migrate create -ext sql -dir sql/migrations -seq create_wallets_table
+
+migrate -database ${POSTGRESQL_URL} -path sql/migrations up

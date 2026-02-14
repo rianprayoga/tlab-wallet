@@ -1,0 +1,38 @@
+package handler
+
+import (
+	"net/http"
+	"tlab-wallet/internal/config"
+	"tlab-wallet/internal/repository"
+
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/jwtauth/v5"
+	"github.com/sirupsen/logrus"
+)
+
+type HttpHandler struct {
+	Db  repository.Repo
+	Log *logrus.Logger
+	Jwt *jwtauth.JWTAuth
+}
+
+func (h *HttpHandler) Routes() http.Handler {
+
+	mux := chi.NewRouter()
+	mux.Use(middleware.Recoverer)
+
+	mux.Route("/api/auth", func(r chi.Router) {
+		r.Post("/register", h.RegisterUser)
+		r.Post("/login", h.LoginUser)
+	})
+
+	mux.Group(func(r chi.Router) {
+		r.Use(config.Verify(h.Jwt))
+		r.Use(config.Authenticator(h.Jwt))
+
+		r.Get("/api/users/profile", h.GetProfile)
+	})
+
+	return mux
+}

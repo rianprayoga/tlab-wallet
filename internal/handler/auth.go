@@ -12,17 +12,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (h *HttpHandler) validateUsername(username string, w http.ResponseWriter) {
+func (h *HttpHandler) validateUsername(username string, w http.ResponseWriter) bool {
 	match, err := regexp.MatchString("^[a-zA-Z0-9_.]{5,100}$", username)
 	if err != nil {
 		h.errorJSON(w, fmt.Errorf("unexpected error occured"))
-		return
+		return false
 	}
 
 	if !match {
 		h.errorJSON(w, fmt.Errorf("username not meet requierment"), http.StatusBadRequest)
-		return
+		return false
 	}
+	return true
 }
 
 func (h *HttpHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +34,9 @@ func (h *HttpHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.validateUsername(rq.Username, w)
+	if h.validateUsername(rq.Username, w) == false {
+		return
+	}
 
 	user, err := h.Db.GetUser(strings.ToLower(rq.Username))
 	if err != nil {
@@ -80,7 +83,9 @@ func (h *HttpHandler) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	h.validateUsername(rq.Username, w)
+	if h.validateUsername(rq.Username, w) == false {
+		return
+	}
 
 	rq.Username = strings.ToLower(rq.Username)
 	isExist, err := h.Db.UsernameExist(rq.Username)

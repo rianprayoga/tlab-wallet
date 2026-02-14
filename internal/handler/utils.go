@@ -39,6 +39,7 @@ func (h *HttpHandler) writeJson(w http.ResponseWriter, status int, data interfac
 		}
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	_, err = w.Write(out)

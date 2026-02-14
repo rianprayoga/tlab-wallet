@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tlab - API Documentation</title>
+    <style>
+        body { margin: 0; padding: 0; }
+        #opencollection-container { width: 100vw; height: 100vh; }
+    </style>
+    <link rel="stylesheet" href="https://cdn.opencollection.com/docs.css">
+    <script src="https://cdn.opencollection.com/docs.js"></script>
+</head>
+<body>
+    <div id="opencollection-container"></div>
+    <script>
+        const collectionData = "opencollection: 1.0.0\ninfo:\n  name: tlab\nconfig:\n  proxy:\n    inherit: true\n    config:\n      protocol: http\n      hostname: ''\n      port: ''\n      auth:\n        username: ''\n        password: ''\n      bypassProxy: ''\nitems:\n  - info:\n      name: create user\n      type: http\n      seq: 1\n    http:\n      method: POST\n      url: http://localhost:8081/api/auth/register\n      body:\n        type: json\n        data: |-\n          {\n            \"username\": \"{{$randomUserName}}\",\n            \"password\": \"54321\"\n          }\n      auth: inherit\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: get profile\n      type: http\n      seq: 3\n    http:\n      method: GET\n      url: http://localhost:8081/api/users/profile\n      auth:\n        type: bearer\n        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEwNTc3NTksImlhdCI6MTc3MTAzOTc1OSwidWlkIjoiNjQ0MzdlMTUtZjllOS00MDZmLWJkZGQtNmQxMTI3MzVkNDY0In0.HU6TGh7_SrwQ8i2JgiDgJAe0tl6mRH0-c7UrlGlDSBI\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: login user\n      type: http\n      seq: 2\n    http:\n      method: POST\n      url: http://localhost:8081/api/auth/login\n      body:\n        type: json\n        data: |-\n          {\n            \"username\": \"misty_watsica\",\n            \"password\": \"54321\"\n          }\n      auth: inherit\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: get wallet\n      type: http\n      seq: 4\n    http:\n      method: GET\n      url: http://localhost:8081/api/wallets/balance\n      auth:\n        type: bearer\n        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEwNzAxNTgsImlhdCI6MTc3MTA1MjE1OCwidWlkIjoiYjU3N2ViMjYtZWYzMC00NGI5LTg3ODctNmM4NDIxNGQxOGJkIn0.cnmBCLTztBTJ2z-EBn8cu4-0ea6Qy9CqYasC28kFmEk\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: top up\n      type: http\n      seq: 5\n    http:\n      method: POST\n      url: http://localhost:8081/api/wallets/topup\n      body:\n        type: json\n        data: |-\n          {\n            \"balance\": 100\n          }\n      auth:\n        type: bearer\n        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEwNjk5ODksImlhdCI6MTc3MTA1MTk4OSwidWlkIjoiYjU3N2ViMjYtZWYzMC00NGI5LTg3ODctNmM4NDIxNGQxOGJkIn0.h_20E4n6ThAdWqSaF7Nx1lwVO8RuLZXjKS801zcf0LU\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: transactions\n      type: http\n      seq: 6\n    http:\n      method: POST\n      url: http://localhost:8081/api/transactions/transfer\n      body:\n        type: json\n        data: |-\n          {\n            \"receiver\": \"8226a09c-b14d-47ec-8c3e-45d49cf62d08\",\n            \"amount\": 2\n          }\n      auth:\n        type: bearer\n        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEwNzAwNTQsImlhdCI6MTc3MTA1MjA1NCwidWlkIjoiYjU3N2ViMjYtZWYzMC00NGI5LTg3ODctNmM4NDIxNGQxOGJkIn0.Ej7hdHjOwuN7Kqg2FCA88AaLcwZUx4KdQwUOyZ_GGb8\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\n  - info:\n      name: get transaction history\n      type: http\n      seq: 7\n    http:\n      method: GET\n      url: http://localhost:8081/api/transactions/history?page=5&size=3\n      params:\n        - name: page\n          value: '5'\n          type: query\n        - name: size\n          value: '3'\n          type: query\n      body:\n        type: json\n        data: ''\n      auth:\n        type: bearer\n        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEwNzU0MjksImlhdCI6MTc3MTA1NzQyOSwidWlkIjoiYzFkYTNjMzktNWFjNi00ZDk3LTk5MzEtNDNkYjExZGZjNzQ0In0.ghTqb7-XOoH-l7PadTkJw-pb1oe7mQAGP8EOB5YFSAQ\n    settings:\n      encodeUrl: true\n      timeout: 0\n      followRedirects: true\n      maxRedirects: 5\nbundled: true\nextensions:\n  bruno:\n    ignore:\n      - node_modules\n      - .git\n    exportedAt: '2026-02-14T08:29:44.150Z'\n    exportedUsing: Bruno/3.0.2\n";
+        new window.OpenCollection({
+            target: document.getElementById('opencollection-container'),
+            opencollection: collectionData,
+            theme: 'light'
+        });
+    </script>
+</body>
+</html>

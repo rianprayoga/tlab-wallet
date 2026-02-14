@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/sirupsen/logrus"
 )
@@ -21,6 +22,9 @@ func (h *HttpHandler) Routes() http.Handler {
 
 	mux := chi.NewRouter()
 	mux.Use(middleware.Recoverer)
+	mux.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"*"},
+	}))
 
 	mux.Route("/api/auth", func(r chi.Router) {
 		r.Post("/register", h.RegisterUser)

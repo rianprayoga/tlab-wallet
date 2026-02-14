@@ -23,6 +23,31 @@ func (pr *PgRepo) CreateWallet(userId string) error {
 	return nil
 }
 
+func (pr *PgRepo) TopUpWallet(userId string, balance uint) (*model.Wallet, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), DbTimeout)
+	defer cancel()
+
+	tx, err := pr.DB.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	var res model.Wallet
+
+	if err = tx.
+		QueryRowContext(ctx, "UPDATE wallets SET balance = balance + $2 where user_id = $1 RETURNING wallet_id, balance", userId, balance).
+		Scan(&res.WalletId, &res.Balance); err != nil {
+		return nil, err
+	}
+
+	if err = tx.Commit(); err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
 func (pr *PgRepo) GetWallet(userId string) (*model.Wallet, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), DbTimeout)
 	defer cancel()

@@ -11,3 +11,7 @@ type WalletResponse struct {
 	WalletId string `json:"walletId"`
 	Balance  uint   `json:"balance" `
 }
+
+type TopUpRequest struct {
+	Balance uint `json:"balance" validate:"required,gte=0"`
+}

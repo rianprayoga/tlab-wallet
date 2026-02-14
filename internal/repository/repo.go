@@ -10,4 +10,5 @@ type Repo interface {
 
 	CreateWallet(userId string) error
 	GetWallet(userId string) (*model.Wallet, error)
+	TopUpWallet(userId string, balance uint) (*model.Wallet, error)
 }

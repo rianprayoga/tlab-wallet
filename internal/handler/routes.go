@@ -35,7 +35,7 @@ func (h *HttpHandler) Routes() http.Handler {
 
 		r.Route("/api/wallets", func(cr chi.Router) {
 			cr.Get("/balance", h.GetWallet)
-			cr.Post("/topup", nil)
+			cr.Post("/topup", h.TopUpWallet)
 		})
 	})
 

@@ -18,5 +18,5 @@ type TopUpRequest struct {
 
 type TransferRequest struct {
 	Receiver string `json:"receiver" validate:"required,uuid4"`
-	Balance  uint   `json:"balance" validate:"required,gte=0"`
+	Amount   uint   `json:"amount" validate:"required,gte=0"`
 }

@@ -39,7 +39,7 @@ func (h *HttpHandler) Routes() http.Handler {
 		})
 
 		r.Route("/api/transactions", func(cr chi.Router) {
-			cr.Get("/history", nil)
+			cr.Get("/history", h.GetTransactions)
 			cr.Post("/transfer", h.Transfer)
 		})
 

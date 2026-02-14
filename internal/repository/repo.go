@@ -12,5 +12,6 @@ type Repo interface {
 	GetWallet(userId string) (*model.Wallet, error)
 	TopUpWallet(userId string, balance uint) (*model.Wallet, error)
 
-	Transaction(sender string, receiver string, balance uint) (*model.Wallet, error)
+	Transaction(sender string, receiver string, amount uint) (*model.TransactionResponse, error)
+	GetTransactions(userId string, size int, page int) (*model.Page[model.TrxHistoryResponse], error)
 }

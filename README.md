@@ -31,4 +31,4 @@ and
 POST /api/auth/login
 ```
 
-[Check this out!](https://github.com/rianprayoga/tlab-wallet/blob/main/tlab-documentation.html)
+For more endpoint [Check this out!](https://github.com/rianprayoga/tlab-wallet/blob/main/tlab-documentation.html)

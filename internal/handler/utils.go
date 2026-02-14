@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 
 	"io"
 	"net/http"
 
+	"github.com/go-chi/jwtauth/v5"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -15,6 +17,13 @@ var validate = validator.New()
 
 type JSONResponse struct {
 	Message string `json:"message"`
+}
+
+func GetUidFromToken(r *http.Request) string {
+	_, claims, _ := jwtauth.FromContext(r.Context())
+	userId := claims["uid"].(string)
+
+	return userId
 }
 
 func (h *HttpHandler) writeJson(w http.ResponseWriter, status int, data interface{}, headers ...http.Header) error {
@@ -69,7 +78,7 @@ func (h *HttpHandler) readJSON(w http.ResponseWriter, r *http.Request, data inte
 
 	ve := validationErrors[0] // get the 1st error
 
-	h.errorJSON(w, fmt.Errorf("%s", ve.Field()+" does not match the required field"), http.StatusBadRequest)
+	h.errorJSON(w, fmt.Errorf("%s", strings.ToLower(ve.Field())+" does not match the requirement"), http.StatusBadRequest)
 	return err
 
 }

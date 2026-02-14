@@ -34,9 +34,8 @@ func (pr *PgRepo) TopUpWallet(userId string, balance uint) (*model.Wallet, error
 	defer tx.Rollback()
 
 	var res model.Wallet
-
 	if err = tx.
-		QueryRowContext(ctx, "UPDATE wallets SET balance = balance + $2 where user_id = $1 RETURNING wallet_id, balance", userId, balance).
+		QueryRowContext(ctx, `UPDATE wallets SET balance = balance + $2 where user_id = $1 RETURNING wallet_id, balance`, userId, balance).
 		Scan(&res.WalletId, &res.Balance); err != nil {
 		return nil, err
 	}

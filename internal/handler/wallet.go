@@ -4,19 +4,10 @@ import (
 	"fmt"
 	"net/http"
 	"tlab-wallet/internal/model"
-
-	"github.com/go-chi/jwtauth/v5"
 )
 
-func getUidFromToken(r *http.Request) string {
-	_, claims, _ := jwtauth.FromContext(r.Context())
-	userId := claims["uid"].(string)
-
-	return userId
-}
-
 func (h *HttpHandler) GetWallet(w http.ResponseWriter, r *http.Request) {
-	userId := getUidFromToken(r)
+	userId := GetUidFromToken(r)
 
 	res, err := h.Db.GetWallet(userId)
 	if err != nil {
@@ -32,7 +23,7 @@ func (h *HttpHandler) GetWallet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *HttpHandler) TopUpWallet(w http.ResponseWriter, r *http.Request) {
-	userId := getUidFromToken(r)
+	userId := GetUidFromToken(r)
 
 	var rq model.TopUpRequest
 	err := h.readJSON(w, r, &rq)

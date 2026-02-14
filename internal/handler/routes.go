@@ -37,6 +37,12 @@ func (h *HttpHandler) Routes() http.Handler {
 			cr.Get("/balance", h.GetWallet)
 			cr.Post("/topup", h.TopUpWallet)
 		})
+
+		r.Route("/api/transactions", func(cr chi.Router) {
+			cr.Get("/history", nil)
+			cr.Post("/transfer", h.Transfer)
+		})
+
 	})
 
 	return mux

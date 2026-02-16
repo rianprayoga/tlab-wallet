@@ -50,6 +50,7 @@ func writeOut(w http.ResponseWriter, message string) {
 	h := w.Header()
 	h.Del("Content-Length")
 	h.Set("Content-Type", "application/json")
+	h.Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusUnauthorized)
 	w.Write(out)
 }
